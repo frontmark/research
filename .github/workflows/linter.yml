@@ -1,0 +1,43 @@
+---
+name: CT
+
+#
+# Documentation:
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+#
+
+# Controls when the action will run
+on:
+  pull_request:
+    branches: [ main ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    # Name the job
+    name: Lint Code Base
+    # Set the agent to run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
+      # Run linter against code base
+      - name: Lint Code Base
+        uses: github/super-linter/slim@v4.8.7
+        env:
+          MULTI_STATUS: false
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_DOCKERFILE: false
+          VALIDATE_PYTHON_PYLINT: false
+          VALIDATE_JSCPD: false
+          VALIDATE_CPP: false
+          VALIDATE_NATURAL_LANGUAGE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

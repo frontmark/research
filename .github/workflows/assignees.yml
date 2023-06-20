@@ -1,0 +1,23 @@
+---
+name: Add
+
+on:
+  pull_request:
+    types: [ opened ]
+    branches: [ main ]
+
+jobs:
+  add:
+    name: Add assignee on opened
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add assignee on opened
+        run: |
+          curl -sSL \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -d "{\"assignees\":[\"${{ github.actor }}\"]}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/assignees"
