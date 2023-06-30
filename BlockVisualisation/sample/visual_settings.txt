@@ -1,0 +1,40 @@
+---Only change numeric values, do not change format.
+-------------FILE SETTINGS--------------------------
+input file(str)
+sample/2011_04_19.gml
+output file(str)
+sample/2011_04_19_out
+----------------FORCEATLAS SETTINGS---------------------
+-(#broken right now)componentwise(0 for calc entire graph, 1 for components, 2 for timestamp components)
+0
+-iterations(int)
+1000
+-edge_force (double)
+0.3
+- gravity(double)
+0.7
+-jitter_tol(double)
+0.1
+-speed(double)
+1.0
+-speed_efficiency(double)
+1.0
+-layoutverbosity(int, only works currently for componentwise 0)
+3
+-------------MULTIPOLEFORCE SETTINGS-----------------
+-terms(int)
+2
+-thresh(int,-1 for auto)
+-1
+-------------KAMADAKAWAI SETTINGS-----------------
+-edge_strength(double)
+1.0
+-thresh(double)
+0.00001
+-iterations(int)
+2000
+-verbosity(int)
+2
+-------------GENERAL SETTINGS-----------------
+-max kamadakawai nodes
+200
