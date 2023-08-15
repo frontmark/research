@@ -8,14 +8,15 @@ import networkx as nx
 
 
 
-INFILENAME = "sample/2011_04_19.gml"
-OUTFILENAME = "sample/2011_04_19_out.txt"
+INFILENAME = "sample/2011_05_19.gml"
+OUTFILENAME = "sample/2011_05_19_out.txt"
 
 
 
 edge_pos = []
 xcoord = []
 ycoord = []
+vertex_type = []
 with open(OUTFILENAME) as f:
     for line in f.readlines():
         #print(line)
@@ -25,7 +26,7 @@ with open(OUTFILENAME) as f:
 
 
 
-if "txt" in INFILENAME: 
+if "txt" in INFILENAME:
     with open(INFILENAME) as f:
         for line in f.readlines()[1:]:
             split = line.split(' ')
@@ -34,6 +35,14 @@ elif "gml" in INFILENAME:
     g = nx.read_gml(INFILENAME, label='id')
     for edge in g.edges():
         edge_pos.append(((xcoord[edge[0]], ycoord[edge[0]]), (xcoord[edge[1]], ycoord[edge[1]])))
+
+    with open(INFILENAME) as f:
+        for line in f.readlines()[1:]:
+            if "address" in line:
+                vertex_type.append('b')
+            if "timestamp" in line:
+                vertex_type.append('r')
+
     #print(len(g.nodes()))
     #print(nx.number_weakly_connected_components(g))
 
@@ -42,24 +51,25 @@ ax = plt.gca()
 #print(xcoord)
 #print(ycoord)
 
-node_collection = ax.scatter(
-    xcoord,
-    ycoord,
-    s=30,
-    c="#1f78b4",
-    marker="o",
-)
+
+
+plt.scatter(xcoord, ycoord,     s=0.3,
+    c=vertex_type[:len(xcoord)],
+    marker=".",)
+
+
 
 
 edge_collection = mpl.collections.LineCollection(
     edge_pos,
     colors="k",
-    linewidths=1.0,
+    linewidths=0.1,
     antialiaseds=(1,),
     linestyle="solid",
     alpha=None,
 )
 
 ax.add_collection(edge_collection)
-
+plt.axis('off')
+plt.savefig("newpic.png", dpi=1000)
 plt.show()

@@ -9,6 +9,8 @@
 #include <cmath>
 #include <unordered_map>
 #include <bitset>
+#include <numeric>
+
 
 using Compl = std::complex<double>;
 
@@ -85,9 +87,9 @@ void Forces::split(int const id){
     _tree.split(id);
     Node& node = _tree.get_node(id);
     std::vector<int> children  = node.get_children();
-
     for (int c: children){
         if (_tree.get_node(c).size()>_thresh){
+            //std::cout<<"-"<<_tree.get_node(c).get_height();
             split(c);
         } else{
             calc_outgoing_coef(c);

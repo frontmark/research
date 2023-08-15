@@ -99,30 +99,31 @@ class ClusterPositioner
                 // clustered because leaf node
                 Compl neighpos = pos_map[_neigh1];
                 double angle = (double)rand() / RAND_MAX*360;
-                return Compl(sin(angle), cos(angle))*Compl(_distance1,0)+neighpos;  
-                    
+                return Compl(sin(angle), cos(angle))*Compl(_distance1,0)+neighpos;
+
             } else if (_type==1){
                 // clustered because bridge node
                 Compl neigh1pos = pos_map[_neigh1];
                 Compl neigh2pos = pos_map[_neigh2];
-                return neigh1pos+(neigh2pos-neigh1pos)*Compl(_distance1/(_distance1+_distance2),0);  
-            
+                return neigh1pos+(neigh2pos-neigh1pos)*Compl(_distance1/(_distance1+_distance2),0);
+
             } else if(_type==2) {
                 // clustered because next to central node
                 Compl neighpos = pos_map[_neigh1];
                 Compl center = 0;
                 for (auto n: neighbors){
                     center += pos_map[n];
-                } 
+                }
                 if (center==Compl(0,0) || center == pos_map[_id]){
                     Compl neighpos = pos_map[_neigh1];
                     double angle = (double)rand() / RAND_MAX*360;
-                    return Compl(sin(angle), cos(angle))*Compl(_distance1,0)+neighpos; 
+                    return Compl(sin(angle), cos(angle))*Compl(_distance1,0)+neighpos;
                 } else{
-                    return center;  
+                    return center;
                 }
-                
+
             }
+            return Compl(0,0);
         }
 
     private:
@@ -131,7 +132,7 @@ class ClusterPositioner
         int _neigh1;
         int _neigh2;
         double _distance1;
-        double _distance2; 
+        double _distance2;
 };
 
 

@@ -29,6 +29,16 @@ public:
     Forces(){};
     Forces(const std::vector<std::pair<Compl, double>>& particles);
     Forces(const std::vector<Particle>& particles);
+
+    
+    void reset(const std::vector<Particle>& particles){
+        _binom_map.clear();
+        _particles.clear();
+        _particles=particles;
+        _forces.clear();
+        _forces = std::vector<Compl> (_particles.size(), Compl(0,0));
+        _tree.reset(_particles);
+    }
     
     void calc_ffm_forces(int terms=3, int thresh=10, int const node_id=0, double strength=.5);
 
@@ -80,6 +90,7 @@ public:
     }
 
     std::vector<Compl> get_forces(){return _forces;};
+
 
 private:
     void precomputations();

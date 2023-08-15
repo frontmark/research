@@ -21,7 +21,7 @@ class Node
 public:
     Node(int id, int parent, std::vector<Particle> particles, double x0, double y0, double width, double height, int x_coord, int y_coord, int depth): _id(id),_parent(parent), _x0(x0),_y0(y0), _width(width), _height(height), _particles(particles), _is_leaf(true), _incoming_coeff(), _outgoing_coeff(), _x_coord(x_coord), _y_coord(y_coord), _depth(depth) {}
 
-    void split(Node& node1, Node& node2, Node& node3, Node& node4, int id1, int id2, int id3,  int id4);
+    void split(int id1, int id2, int id3,  int id4);
 
     double const get_x0()  {return _x0;}
     double const get_y0()  {return _y0;}
@@ -44,8 +44,12 @@ public:
         close_nodes = close;
     }
 
-    const std::vector<Particle> & get_particles()const  {
+    std::vector<Particle> & get_particles()  {
         return _particles;
+    }
+
+    void del_particles()  {
+        _particles.clear();
     }
 
     int const size()const {
@@ -60,9 +64,6 @@ public:
         return _is_leaf;
     }
 
-    void not_leaf_anymore(){
-        _is_leaf=false;
-    }
 
     const std::vector< std::complex<double>> & get_outgoing()const {
         return _outgoing_coeff;
@@ -124,7 +125,7 @@ private:
 
     int const _id = -1;
 
-    std::vector<Particle> const _particles;
+    std::vector<Particle> _particles;
 
     
     std::vector<std::complex<double>> _outgoing_coeff;
@@ -157,6 +158,26 @@ public:
         double _y0 =    (*std::min_element(particles.begin(),particles.end(), [&](Particle a, Particle b){return a.get_pos().imag()<b.get_pos().imag();})).get_pos().imag();
         double _width = (*std::max_element(particles.begin(),particles.end(), [&](Particle a, Particle b){return a.get_pos().real()<b.get_pos().real();})).get_pos().real()-_x0;
         double _height = (*std::max_element(particles.begin(),particles.end(), [&](Particle a, Particle b){return a.get_pos().imag()<b.get_pos().imag();})).get_pos().imag()-_y0;
+
+        node_map.emplace_back(Node(0, 0, particles, _x0, _y0, _width, _height, 0, 0, 0));
+    }
+
+    void reset(std::vector<Particle> particles){
+        node_map.clear();
+
+
+        double _x0 =    (*std::min_element(particles.begin(),particles.end(), [&](Particle a, Particle b){return a.get_pos().real()<b.get_pos().real();})).get_pos().real();
+        double _y0 =    (*std::min_element(particles.begin(),particles.end(), [&](Particle a, Particle b){return a.get_pos().imag()<b.get_pos().imag();})).get_pos().imag();
+        double _width = (*std::max_element(particles.begin(),particles.end(), [&](Particle a, Particle b){return a.get_pos().real()<b.get_pos().real();})).get_pos().real()-_x0;
+        double _height = (*std::max_element(particles.begin(),particles.end(), [&](Particle a, Particle b){return a.get_pos().imag()<b.get_pos().imag();})).get_pos().imag()-_y0;
+
+        for (auto p: particles){
+            if (p.get_pos().real()>_x0+_width || p.get_pos().real()<_x0 || p.get_pos().imag()>_y0+_height || p.get_pos().imag()<_y0){
+                //std::cout<< "\n " <<_x0<<" < "<<p.get_pos().real() <<" < "<<_x0+_width <<"\n";
+                //std::cout <<_y0<<" < "<<p.get_pos().imag() <<" < "<< _y0+_height<<" "<<"\n";
+            }
+        }
+
         node_map.emplace_back(Node(0, 0, particles, _x0, _y0, _width, _height, 0, 0, 0));
     }
 

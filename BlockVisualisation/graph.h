@@ -70,7 +70,7 @@ public:
         std::cout<<"Reading file "<<file_path<<".\n";
         if (file_type=="standard"){
             // reads file. first line is int with number of nodes and then each line has two ints the endpoints of an edge
-            std::ifstream infile(file_path);
+            std::ifstream infile(file_path.c_str());
             std::string str; 
             std::getline(infile, str);
             int id_number = std::stoi(str);
@@ -87,7 +87,7 @@ public:
             }
         } else if (file_type == "gml"){
              // reads gml file into grpah format
-            std::ifstream infile(file_path);
+            std::ifstream infile(file_path.c_str());
             std::string str; 
             std::getline(infile, str);
             int reading_node_edge = 0;

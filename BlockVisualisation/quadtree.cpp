@@ -23,9 +23,10 @@ int bit_ceil2(unsigned int a){
 
 
 // Represents a node in the quadtree.
-void Node::split(Node& node1, Node& node2, Node& node3, Node& node4, int id1, int id2, int id3,  int id4)
+void Node::split(int id1, int id2, int id3,  int id4)
 {
     _child_NW = id1; _child_NE = id2; _child_SW = id3; _child_SE = id4;
+    _is_leaf=false;
 }
 
 
@@ -118,24 +119,19 @@ void QuadTree::split(int id)
     int y_coord1 = y_coord|1;
     int x_coord1 = x_coord|1;
 
+    node.del_particles();
+    
     node_map.emplace_back(Node (id1, id, particles1, x0, y0, w2, h2, x_coord, y_coord, depth));
     node_map.emplace_back(Node (id2, id, particles2, x0+w2, y0, w2, h2, x_coord1, y_coord, depth));
     node_map.emplace_back(Node (id3, id, particles3, x0, y0+h2, w2, h2, x_coord, y_coord1, depth));
     node_map.emplace_back(Node (id4, id, particles4, x0+w2, y0+h2, w2, h2, y_coord1, y_coord1, depth));
 
-    Node& node1 = node_map[id1];
-    Node& node2 = node_map[id2];
-    Node& node3 = node_map[id3];
-    Node& node4 = node_map[id4];
     Node& nodeP = get_node(id);
-
-    nodeP.split(node1, node2, node3, node4, id1, id2, id3, id4);
-    nodeP.not_leaf_anymore();
+    nodeP.split(id1, id2, id3, id4);
     
 }
 
 
-//TODO probably COMPLETTTTEEEE TRASH :/
 void QuadTree::calc_close()
 {
     int size = node_map.size();

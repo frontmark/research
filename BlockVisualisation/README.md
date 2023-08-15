@@ -5,7 +5,7 @@ Two fundamental graph visualizing ideas are implemented in this code.
 
 https://www.sciencedirect.com/science/article/abs/pii/0020019089901026
 
-Here an optimal euclidean distance between two nodes is calculated based on the corresponding graph distance.
+An optimal euclidean distance between two nodes is calculated based on the corresponding graph distance.
 Then an energy function based on the variance of node distances and the optimal distances is optimized with newton's method.
 
 ## Clustering

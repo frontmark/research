@@ -9,8 +9,8 @@
 BlockVisual::BlockVisual(std::string file_settings = ""){
     _settings = Settings();
     if (file_settings != ""){
-        std::ifstream setfile(file_settings);
-        std::string str; 
+        std::ifstream setfile(file_settings.c_str());
+        std::string str;
         std::getline(setfile, str);std::getline(setfile, str);std::getline(setfile, str);std::getline(setfile, str);
         _file_path_in = str;
         std::getline(setfile, str);std::getline(setfile, str);
@@ -50,30 +50,30 @@ BlockVisual::BlockVisual(std::string file_settings = ""){
 
 
 void write_particles(std::vector<Particle> _particles, int component, std::string filename){
-    
+
     if (component == -1){
         std::ofstream myfile;
-        myfile.open(filename+".txt", std::ios::out|std::ios::trunc);
+        myfile.open((filename+".txt").c_str(), std::ios::out|std::ios::trunc);
         for (Particle p: _particles){myfile << p.get_pos().real() << "|" << p.get_pos().imag() << std::endl;}
         myfile.close();
     } else {
         std::ofstream myfile;
-        myfile.open(filename+".txt", std::ios::out|std::ios::app);
+        myfile.open((filename+".txt").c_str(), std::ios::out|std::ios::app);
         int p_index=0;
         for (Particle p: _particles){myfile <<component << "|" << p.get_pos().real() << "|" << p.get_pos().imag() << std::endl;p_index++;}
         myfile.close();
     }
-    
+
 };
 
 void write_positions(std::vector<Compl> _positions, std::string filename){
 
 
     std::ofstream myfile;
-    myfile.open(filename+".txt");
+    myfile.open((filename+".txt").c_str());
     for (Compl p: _positions){myfile<< p.real() << "|" << p.imag() << std::endl;}
     myfile.close();
-    
+
 };
 
 
@@ -98,8 +98,7 @@ void BlockVisual::calc_visual(){
 
         ClusterGraph CL = ClusterGraph(graph);
         Graph g = CL.get_graph();
-        
-        if (g.get_particles().size()<_settings.max_kamada_kawai_nodes){
+        if (g.num_vertices()<_settings.max_kamada_kawai_nodes){
             //l.calc_kamada_kawai(g, 10000, 0.0001, 200, 2);
             l.calc_kamada_kawai(g, _settings.kk_edge_strength, _settings.kk_thresh, _settings.kk_iterations,_settings.kk_verbosity);
             std::vector<Compl> clustered_layout;
@@ -108,13 +107,12 @@ void BlockVisual::calc_visual(){
             }
             component_positions.push_back(clustered_layout);
         }else{
-            l.calc_fa2(g, _settings.iterations, _settings.terms, _settings.thresh,_settings.edge_force, _settings.gravity, _settings.jitter_tol, _settings.speed, _settings.speed_efficiency, _settings.layout_verbosity); 
-            
+            l.calc_fa2(g, _settings.iterations, _settings.terms, _settings.thresh,_settings.edge_force, _settings.gravity, _settings.jitter_tol, _settings.speed, _settings.speed_efficiency, _settings.layout_verbosity);
+
             //CL.cluster_leaves();
             //CL.cluster_bridges();
             //CL.cluster_central_node(4);
-            
-            
+
             std::vector<Compl> clustered_layout;
             double mean_edge = 0;
             for (auto e: g.get_edges()){
@@ -132,11 +130,11 @@ void BlockVisual::calc_visual(){
 
     }
 
-    component_positions = l.calc_components_layout(component_positions, component_positions.size()*15);
+    component_positions = l.calc_many_components_layout(component_positions, component_positions.size()*15, 250);
     std::vector<Compl> positions;
     for (int id=0;id<big_graph.num_vertices();id++){
         positions.push_back(component_positions[component_vec[id]][new_id[id]]);
-    }    
+    }
     write_positions(positions, _file_path_out);
 }
 
@@ -150,11 +148,10 @@ void BlockVisual::fa2_visual(){
 
 
         LayoutGraph l;
-        l.calc_fa2(big_graph, _settings.iterations, _settings.terms, _settings.thresh,_settings.edge_force, _settings.gravity, _settings.jitter_tol, _settings.speed, _settings.speed_efficiency, _settings.layout_verbosity); 
+        l.calc_fa2(big_graph, _settings.iterations, _settings.terms, _settings.thresh,_settings.edge_force, _settings.gravity, _settings.jitter_tol, _settings.speed, _settings.speed_efficiency, _settings.layout_verbosity);
         std::vector<Compl> positions;
         for (auto p: big_graph.get_particles()){
             positions.push_back(p.get_pos());
-        }   
-        write_positions(positions, _file_path_out); 
+        }
+        write_positions(positions, _file_path_out);
     };
-
