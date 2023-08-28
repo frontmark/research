@@ -1,0 +1,14 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+matplotlib = "==3.*"
+numpy = "==1.*"
+networkx = "==3.*"
+
+[requires]
+python_version = "3"
