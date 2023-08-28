@@ -7,10 +7,8 @@ import numpy as np
 import networkx as nx
 
 
-
-INFILENAME = "sample/2011_05_19.gml"
-OUTFILENAME = "sample/2011_05_19_out.txt"
-
+INFILENAME = "2011_05_19.gml"
+OUTFILENAME = "2011_05_19_out.txt"
 
 
 edge_pos = []
@@ -19,45 +17,46 @@ ycoord = []
 vertex_type = []
 with open(OUTFILENAME) as f:
     for line in f.readlines():
-        #print(line)
-        split = line.split('|')
+        split = line.split("|")
         xcoord.append(float(split[0]))
         ycoord.append(float(split[1]))
-
 
 
 if "txt" in INFILENAME:
     with open(INFILENAME) as f:
         for line in f.readlines()[1:]:
-            split = line.split(' ')
-            edge_pos.append(((xcoord[int(split[0])], ycoord[int(split[0])]), (xcoord[int(split[1])], ycoord[int(split[1])])))
+            split = line.split(" ")
+            edge_pos.append(
+                (
+                    (xcoord[int(split[0])], ycoord[int(split[0])]),
+                    (xcoord[int(split[1])], ycoord[int(split[1])]),
+                )
+            )
 elif "gml" in INFILENAME:
-    g = nx.read_gml(INFILENAME, label='id')
+    g = nx.read_gml(INFILENAME, label="id")
     for edge in g.edges():
-        edge_pos.append(((xcoord[edge[0]], ycoord[edge[0]]), (xcoord[edge[1]], ycoord[edge[1]])))
+        edge_pos.append(
+            ((xcoord[edge[0]], ycoord[edge[0]]), (xcoord[edge[1]], ycoord[edge[1]]))
+        )
 
     with open(INFILENAME) as f:
         for line in f.readlines()[1:]:
             if "address" in line:
-                vertex_type.append('b')
+                vertex_type.append("b")
             if "timestamp" in line:
-                vertex_type.append('r')
+                vertex_type.append("r")
 
-    #print(len(g.nodes()))
-    #print(nx.number_weakly_connected_components(g))
 
 ax = plt.gca()
 
-#print(xcoord)
-#print(ycoord)
 
-
-
-plt.scatter(xcoord, ycoord,     s=0.3,
-    c=vertex_type[:len(xcoord)],
-    marker=".",)
-
-
+plt.scatter(
+    xcoord,
+    ycoord,
+    s=0.3,
+    c=vertex_type[: len(xcoord)],
+    marker=".",
+)
 
 
 edge_collection = mpl.collections.LineCollection(
@@ -70,6 +69,6 @@ edge_collection = mpl.collections.LineCollection(
 )
 
 ax.add_collection(edge_collection)
-plt.axis('off')
-plt.savefig("newpic.png", dpi=1000)
+plt.axis("off")
+plt.savefig("2011_05_19_pic.png", dpi=1000)
 plt.show()
