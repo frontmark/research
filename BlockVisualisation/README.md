@@ -34,11 +34,69 @@ Layouts for components are computed separately. For smaller components we use Ka
 
 ### build
 
+To build the executable, run:
+
+```sh
 g++ -Ofast main.cpp forces.cpp quadtree.cpp layout.cpp block_visual.cpp cluster.cpp -o calc_layout.exe
+```
+
+or on macOS with Homebrew's `gcc@13`:
+
+```sh
+/opt/homebrew/bin/g++-13 -Ofast main.cpp forces.cpp quadtree.cpp layout.cpp block_visual.cpp cluster.cpp -o calc_layout.exe
+```
+
+or use Docker's official `gcc:13` image to build the executable:
+
+```sh
+docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp gcc:13 g++ -Ofast main.cpp forces.cpp quadtree.cpp layout.cpp block_visual.cpp cluster.cpp -o calc_layout.exe
+```
 
 ### run
-adjust visual_settings.txt
-calc_layout.exe will now calculate a layout
+
+Run
+
+```sh
+./calc_layout.exe
+```
+
+on the command line to calculate a layout
+
+or use Docker's official `gcc:13` image to do so:
+
+```sh
+docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp gcc:13 ./calc_layout.exe
+```
+
+You should see something like this:
+
+```sh
+Reading file sample/2011_05_19.gml.
+Calculating fa2 layout for graph with 14867 vertices:
+...
+
+Ran through in: 33.7754 seconds...
+```
+
+You should see a new file `sample/2011_05_19_out.txt` being created.
+
+Adjust `sample/visual_settings.txt` to define the input and output files.
 
 ### draw
-adjust filenames in, and run gen_img_from_lay.py to draw the calculated layout
+
+Run
+
+```sh
+make -C sample reinit
+```
+
+on the command line
+
+- to build a Docker image with all necessary Python dependencies,
+- to run the Docker image to draw the calculated layout.
+
+Alternatively, execute `sample/gen_img_from_lay.py` directly.
+
+You should see a new file `sample/2011_05_19_pic.png` being created.
+
+Adjust `sample/gen_img_from_lay.py` to define the input and output files.
