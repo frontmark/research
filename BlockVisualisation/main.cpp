@@ -13,17 +13,6 @@
 
 using namespace std::chrono;
 
-// hardcoded that terms can be at most 16 since we used bitsets for the binomial
-// maps g++ main.cpp forces.cpp quadtree.cpp g++ main.cpp forces.cpp quadtree.cpp
-// layout.cpp
-
-/*
-Reading file sample/2019_06_15.gml.
-Calculating layout for graph with 1297265 vertices:
-100%Ran through in: 2714.97 seconds...
-
-100 iterations*/
-
 int main() {
   auto start = high_resolution_clock::now();
 
