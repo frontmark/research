@@ -58,7 +58,7 @@ docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp gcc:13 g++ -Ofast
 
 ### run
 
-Run
+To run the built executable, run
 
 ```sh
 ./calc_layout.exe
@@ -88,7 +88,7 @@ Adjust `sample/visual_settings.txt` to define the input and output files.
 
 ### draw
 
-Run
+To draw the calculated layout, run
 
 ```sh
 make -C sample reinit
