@@ -1,9 +1,9 @@
 ---Only change numeric values, do not change format.
 -------------FILE SETTINGS--------------------------
 input file(str)
-sample/2013_12_12.gml
+sample/2011_05_19.gml
 output file(str)
-sample/2013_12_12_2_out
+sample/2011_05_19_out
 ----------------FORCEATLAS SETTINGS---------------------
 -(#broken right now)componentwise(0 for calc entire graph, 1 for components, 2 for timestamp components)
 0
