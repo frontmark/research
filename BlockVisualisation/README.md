@@ -32,6 +32,10 @@ Layouts for components are computed separately. For smaller components we use Ka
 
 ## Execution
 
+To build and run the code, you can use your local `g++` compiler or Docker's official `gcc:13` image. To draw the calculated layout, you can use your local `python3` interpreter or Docker's official `python:3` image.
+
+Examples are given for the sample graph `sample/2011_05_19.gml`.
+
 ### build
 
 To build the executable, run:
