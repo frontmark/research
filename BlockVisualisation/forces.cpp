@@ -11,6 +11,7 @@
 #include <bitset>
 #include <numeric>
 
+#include <cstdint>
 
 using Compl = std::complex<double>;
 
