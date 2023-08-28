@@ -1,5 +1,3 @@
-// square.cpp (Compute the Square of an Integer)
-
 #include "block_visual.h"
 #include "forces.h"
 #include "layout.h"
@@ -18,7 +16,6 @@ int main() {
 
   BlockVisual BV = BlockVisual("sample/visual_settings.txt");
   BV.calc_visual();
-  // BV.fa2_visual();
 
   auto stop = high_resolution_clock::now();
   auto duration = duration_cast<microseconds>(stop - start);
