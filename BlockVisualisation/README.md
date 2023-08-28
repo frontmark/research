@@ -4,7 +4,7 @@ Two fundamental graph visualizing ideas are implemented in this code.
 
 ## Kamada-Kawai Algorithm
 
-https://www.sciencedirect.com/science/article/abs/pii/0020019089901026
+[https://www.sciencedirect.com/science/article/abs/pii/0020019089901026](https://www.sciencedirect.com/science/article/abs/pii/0020019089901026)
 
 An optimal euclidean distance between two nodes is calculated based on the corresponding graph distance. Then, an energy function based on the variance of node distances and the optimal distances is optimized with Newton's method.
 
@@ -12,11 +12,11 @@ An optimal euclidean distance between two nodes is calculated based on the corre
 
 We also implemented a simple clustering and unclustering algorithm, that allows Kamada-Kawai to be run on bigger graphs, but this is not currently used. Instead, we just use the ForceAtlas2 algorithm on big graphs.
 
-Similar to https://github.com/visjs/vis-network
+Similar to [https://github.com/visjs/vis-network](https://github.com/visjs/vis-network)
 
 ## ForceAtlas2
 
-https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679
+[https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679)
 
 A force-based layout algortihm.
 
@@ -24,7 +24,7 @@ A force-based layout algortihm.
 
 The forces are calculated with the fast multipole algorithm. Also includes an own quadtree implementation.
 
-https://cpsc.yale.edu/sites/default/files/files/tr533.pdf
+[https://cpsc.yale.edu/sites/default/files/files/tr533.pdf](https://cpsc.yale.edu/sites/default/files/files/tr533.pdf)
 
 ## Putting it together
 
