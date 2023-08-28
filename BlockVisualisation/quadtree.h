@@ -219,9 +219,6 @@ public:
     for (auto p : particles) {
       if (p.get_pos().real() > _x0 + _width || p.get_pos().real() < _x0 ||
           p.get_pos().imag() > _y0 + _height || p.get_pos().imag() < _y0) {
-        // std::cout<< "\n " <<_x0<<" < "<<p.get_pos().real() <<" <
-        // "<<_x0+_width <<"\n"; std::cout <<_y0<<" < "<<p.get_pos().imag() <<" <
-        // "<< _y0+_height<<" "<<"\n";
       }
     }
 
