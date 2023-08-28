@@ -3,8 +3,8 @@ import matplotlib.collections  # call as mpl.collections
 import matplotlib.pyplot as plt
 import networkx as nx
 
-INFILENAME = "2013_12_12.gml"
-OUTFILENAME = "2013_12_12_out.txt"
+INFILENAME = "2011_05_19.gml"
+OUTFILENAME = "2011_05_19_out.txt"
 
 
 edge_pos = []
@@ -66,5 +66,5 @@ edge_collection = mpl.collections.LineCollection(
 
 ax.add_collection(edge_collection)
 plt.axis("off")
-plt.savefig("2013_12_12_pic.png", dpi=1000)
+plt.savefig("2011_05_19_pic.png", dpi=1000)
 plt.show()
